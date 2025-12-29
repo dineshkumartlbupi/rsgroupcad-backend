@@ -15,11 +15,11 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 
 // Middleware
-app.use(cors({
-    origin: '*', // Allow all origins for testing
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type']
-}));
+// app.use(cors({
+//     origin: '*', // Allow all origins for testing
+//     methods: ['GET', 'POST'],
+//     allowedHeaders: ['Content-Type']
+// }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -57,6 +57,10 @@ app.get('/api/config-check', (req, res) => {
     const relevantKeys = allKeys.filter(k => k.startsWith('SMTP') || k.startsWith('VERCEL') || k === 'NODE_ENV');
 
     res.json({
+        project_identity: {
+            name: process.env.VERCEL_PROJECT_NAME || 'Unknown',
+            id: process.env.VERCEL_PROJECT_ID || 'Unknown'
+        },
         custom_vars_status: {
             smtp_host: process.env.SMTP_HOST ? 'SET' : 'MISSING',
             smtp_user: process.env.SMTP_USER ? 'SET' : 'MISSING',
