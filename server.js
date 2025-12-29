@@ -44,6 +44,16 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'OK', message: 'Server is running' });
 });
 
+// Debug endpoint to check if env vars are loaded (Safe version)
+app.get('/api/config-check', (req, res) => {
+    res.json({
+        smtp_host: process.env.SMTP_HOST ? 'SET' : 'MISSING',
+        smtp_user: process.env.SMTP_USER ? 'SET' : 'MISSING',
+        smtp_pass: process.env.SMTP_PASS ? 'SET' : 'MISSING',
+        recipient: process.env.RECIPIENT_EMAIL ? 'SET' : 'MISSING'
+    });
+});
+
 // Career application endpoint
 app.post('/api/career/apply', upload.single('resume'), async (req, res) => {
     try {
