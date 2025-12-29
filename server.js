@@ -53,11 +53,18 @@ app.get('/api/health', (req, res) => {
 
 // Debug endpoint to check if env vars are loaded (Safe version)
 app.get('/api/config-check', (req, res) => {
+    const allKeys = Object.keys(process.env).sort();
+    const relevantKeys = allKeys.filter(k => k.startsWith('SMTP') || k.startsWith('VERCEL') || k === 'NODE_ENV');
+
     res.json({
-        smtp_host: process.env.SMTP_HOST ? 'SET' : 'MISSING',
-        smtp_user: process.env.SMTP_USER ? 'SET' : 'MISSING',
-        smtp_pass: process.env.SMTP_PASS ? 'SET' : 'MISSING',
-        recipient: process.env.RECIPIENT_EMAIL ? 'SET' : 'MISSING'
+        custom_vars_status: {
+            smtp_host: process.env.SMTP_HOST ? 'SET' : 'MISSING',
+            smtp_user: process.env.SMTP_USER ? 'SET' : 'MISSING',
+            smtp_pass: process.env.SMTP_PASS ? 'SET' : 'MISSING',
+            recipient: process.env.RECIPIENT_EMAIL ? 'SET' : 'MISSING'
+        },
+        available_env_keys: relevantKeys,
+        total_env_count: allKeys.length
     });
 });
 
