@@ -908,4 +908,5 @@ app.post('/api/consultation', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`✅ Server is running on port ${PORT}`);
     console.log(`📧 SMTP configured for: ${process.env.SMTP_USER}`);
+    console.log(`🚀 Ready to accept requests from all origins`);
 });
