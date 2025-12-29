@@ -4,6 +4,13 @@ const nodemailer = require('nodemailer');
 const cors = require('cors');
 const multer = require('multer');
 
+console.log('--- SERVER STARTING ---');
+console.log('Environment Check:');
+console.log('SMTP_HOST:', process.env.SMTP_HOST ? 'Present' : 'Missing');
+console.log('SMTP_USER:', process.env.SMTP_USER ? 'Present' : 'Missing');
+console.log('SMTP_PASS:', process.env.SMTP_PASS ? 'Present (Hidden)' : 'Missing');
+console.log('-----------------------');
+
 const app = express();
 const PORT = process.env.PORT || 5001;
 
