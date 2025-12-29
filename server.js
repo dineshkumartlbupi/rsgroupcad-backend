@@ -25,14 +25,9 @@ const upload = multer({
 
 // Create SMTP transporter
 const createTransporter = () => {
-    // Check for missing credentials
-    if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
-        console.warn('⚠️  WARNING: SMTP_USER or SMTP_PASS is missing. Email sending will likely fail.');
-    }
-
     return nodemailer.createTransport({
-        host: process.env.SMTP_HOST || 'smtp.gmail.com', // Default to Gmail if env var is missing
-        port: process.env.SMTP_PORT || 587, // Default to 587
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
         secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
         auth: {
             user: process.env.SMTP_USER,
@@ -913,5 +908,4 @@ app.post('/api/consultation', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`✅ Server is running on port ${PORT}`);
     console.log(`📧 SMTP configured for: ${process.env.SMTP_USER}`);
-    console.log(`🚀 Ready to accept requests from all origins`);
 });
